@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contador até o Natal</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-image: url(img/artboard-studio-B40ztSGQTZY-unsplash.jpg);
+            background-repeat: no-repeat;
+            background-size: 100%;
+        }
+
+        h1 {
+            color: white;
+            position: absolute;
+            margin-top: -300px;
+        }
+
+        #countdown {
+            text-align: center;
+            font-size: 2em;
+            margin-top: 50px;
+            border: pink solid 2px;
+            border-radius: 5px;
+            margin: 20px;
+            padding: 20px;
+            color: white;
+            flex-direction: column;
+        }
+    </style>
+</head>
+<body>
+    <h1>Contagem regressiva para o Natal!</h1>
+    <div id="countdown"></div>
+
+    <script>
+        // Função para calcular o tempo restante até o Natal
+        function calcularTempoRestante() {
+            const hoje = new Date();
+            const natal = new Date(hoje.getFullYear(), 11, 25); // Mês é indexado de 0 a 11
+
+            // Verificar se o Natal já passou para o próximo ano
+            if (hoje > natal) {
+                natal.setFullYear(hoje.getFullYear() + 1);
+            }
+
+            const diferenca = natal - hoje;
+
+            const dias = Math.floor(diferenca / (1000 * 60 * 60 * 24));
+            const horas = Math.floor((diferenca % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutos = Math.floor((diferenca % (1000 * 60 * 60)) / (1000 * 60));
+            const segundos = Math.floor((diferenca % (1000 * 60)) / 1000);
+
+            return { dias, horas, minutos, segundos };
+        }
+
+        // Função para exibir o contador
+        function atualizarContador() {
+            const tempoRestante = calcularTempoRestante();
+
+            document.getElementById('countdown').innerHTML =
+                `${tempoRestante.dias}d ${tempoRestante.horas}h ${tempoRestante.minutos}m ${tempoRestante.segundos}s`;
+        }
+
+        // Atualizar o contador a cada segundo
+        setInterval(atualizarContador, 1000);
+
+        // Exibir o contador imediatamente ao carregar a página
+        atualizarContador();
+    </script>
+</body>
+</html>
